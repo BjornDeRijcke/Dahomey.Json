@@ -62,8 +62,9 @@ namespace Dahomey.Json.Serialization.Converters.Mappings
 
             for (int i = 0; i < _memberNames.Count; i++)
             {
-                if (values.TryGetValue(_memberNames[i], out object? value))
+                if (values.Any(v => v.Key.Span.SequenceEqual(_memberNames[i].Span)))
                 {
+                    var value = values.First(v => v.Key.Span.SequenceEqual(_memberNames[i].Span)).Value;
                     args[i] = value;
                 }
                 else
